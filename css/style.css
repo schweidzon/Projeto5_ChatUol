@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    background-color:#E5E5E5;
+}
+
+.container {
+    width: 375px;
+    
+}
+
+.header {
+    width: 375px;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 26px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+    background-color: #FFFFFF;
+    
+    
+}
+.header img {
+    width: 75px;
+    height: 53px;
+    margin-left: 22px;
+}
+
+.header ion-icon {
+   font-size: 50px;
+   margin-right: 22px;
+}
+
+.chat {
+    width: 375px;
+    height: 72vh;  /* Tirar depois */
+    background-color: #E5E5E5;
+   
+}
+
+.user {
+    width: 375px;
+    min-height: 40px;
+    display: flex;      
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 4px;    
+    padding: 15px 8px 15px 8px;
+    background-color: #DCDCDC;
+    font-weight: 400;
+    font-size: 14px;
+    border-radius: 2px;
+}
+
+.time {
+    color: #AAAAAA;
+}
+
+
+
+.nameAndStatus{
+    display: flex;
+    justify-content: center;
+    margin-left: 10px;
+    gap: 5px;
+}
+
+.chatName p {
+    font-weight: normal;
+}
+
+
+  
+.status, .normalMessage, .reservedMessage {
+    margin-left: 5px;
+   
+}
+
+.user:nth-child(2),.user:nth-child(3) {
+    background-color: #FFFFFF;
+
+}
+
+.user:nth-child(4) {
+    background-color: #FFDEDE;
+    line-height: 20px;
+}
+
+.chatName {
+    font-weight: bold;
+}
+
+.sendMessage {
+    width: 375px;
+    height: 80px;
+    border-style: none;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
+    
+}
+
+.sendMessage input {
+    width: 100%;
+    height: 100%;
+    padding: 20px;    
+    border-style: none;   
+}
+
+.sendMessage input::placeholder {
+    
+    font-style: italic; 
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+}
+  
+
+
+.sendMessage ion-icon {
+    position: absolute;
+    font-size: 20px;
+    right: 20px;
+    top: 30px;
+}
+
+.menu {
+    width:259px;
+    height: 100vh;
+    background-color: #FFFFFF;
+    position: absolute;
+    top: 0;
+    right: -259px;        
+    transition: all 0.4s ease
+}
+
+.openMenu {
+    right: 0;
+}
+
+.menuHeader {
+    width: 259px;
+    height: 84px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    padding: 20px;
+}
+
+.menuItem {
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 18px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    position: relative;
+    
+    
+}
+
+.menuItem ion-icon {
+    font-size: 25px;
+}
+
+
+
+.check {
+    color: #28BB25;
+    font-size: 18px;
+    font-weight: bold;
+    --ionicon-stroke-width: 90px;
+    position: absolute;
+    right: 25px;
+    opacity: 0;    
+}
+
+
+
+.menuItem.selected .check {
+    opacity: 1;
+}
+
+
+.chooseName {  
+    width: 375px;
+    height: 100vh;      
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    padding:35px 57px 115px 57px;
+    background-color: #FFFFFF;
+    
+    
+}
+
+.chooseName input {
+    width: 261px;
+    height: 54px;   
+    background: #FFFFFF;
+    border: 1px solid #D7D7D7;
+    border-radius: 4px;
+    margin-top:-100px;
+}
+
+.chooseName input::placeholder {
+    color: #AEAEAE;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 25px;
+    text-align: center;
+}
+
+.chooseName img {
+    margin-top: -150px;
+}
+
+
+
+.chooseName button {
+    width: 109px;
+    height: 45px;
+    background: #E7E7E7;
+    border-radius: 9px;
+    border-style: none;
+    align-items: center;
+    align-self: center;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 25px;
+    color: #696969;
+}
+ 
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+}
+
+.hidden {
+    display: none;
+}
