@@ -36,16 +36,18 @@ body {
 .header ion-icon {
    font-size: 50px;
    margin-right: 22px;
+   cursor: pointer;
 }
 
 .chat {
     width: 375px;
     height: 72vh;  /* Tirar depois */
     background-color: #E5E5E5;
+    overflow-x: hidden;
    
 }
 
-.user {
+.status, .message, .private_message {
     width: 375px;
     min-height: 40px;
     display: flex;      
@@ -57,44 +59,38 @@ body {
     font-weight: 400;
     font-size: 14px;
     border-radius: 2px;
+    line-height: 20px;
+    
 }
 
 .time {
     color: #AAAAAA;
+    
+}
+
+.message {
+    background-color: #FFFFFF;
+}
+
+.message p, .private_message p {
+    margin: 0 5px 0 5px;
+}
+
+.private_message {
+    background-color: #FFDEDE;
 }
 
 
 
-.nameAndStatus{
-    display: flex;
-    justify-content: center;
-    margin-left: 10px;
-    gap: 5px;
-}
 
-.chatName p {
-    font-weight: normal;
+.from, .to {
+    font-weight: bold;
 }
 
 
   
-.status, .normalMessage, .reservedMessage {
-    margin-left: 5px;
-   
-}
-
-.user:nth-child(2),.user:nth-child(3) {
-    background-color: #FFFFFF;
-
-}
-
-.user:nth-child(4) {
-    background-color: #FFDEDE;
-    line-height: 20px;
-}
-
-.chatName {
-    font-weight: bold;
+.from, .text {
+    margin-left: 5px;  
 }
 
 .sendMessage {
@@ -134,12 +130,22 @@ body {
 
 .menu {
     width:259px;
-    height: 100vh;
+    height: 667px;
     background-color: #FFFFFF;
     position: absolute;
     top: 0;
     right: -259px;        
-    transition: all 0.4s ease
+    transition: all 0.4s ease;
+    
+}
+
+.contacts {
+    overflow-x: hidden;
+    height: 420px;
+}
+
+.privacy {
+    margin-top: -20px;
 }
 
 .openMenu {
@@ -198,7 +204,8 @@ body {
 }
 
 
-.chooseName {  
+.chooseName {
+  
     width: 375px;
     height: 100vh;      
     display: flex;

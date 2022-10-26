@@ -6,22 +6,89 @@ const menuItens = document.querySelectorAll('.menuItem')
 const nameButton = document.querySelector('.chooseName button')
 const chooseName = document.querySelector('.chooseName')
 const container = document.querySelector('.container')
-console.log(nameButton)
- 
-function sendName() {
-    container.classList.remove('hidden')
-    chooseName.classList.add('hidden')
+const contacts = document.querySelector('.contacts')
+chat.scrollIntoView()
 
+//pegar da internet
+
+const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages')
+    promise.then(render) 
+//setInterval(() => {
+//    const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages')
+//    promise.then(render) 
+//}, 3000)
+
+function render(resposta) {
+    chat.innerHTML = ""
+    const resultado = resposta.data
+
+    for(let i = 0; i < resultado.length; i++) {        
+        
+        if(resultado[i].type === 'status') {
+            chat.innerHTML += `
+            <div class="status">
+                <div class="time">(${resultado[i].time})</div>
+                <div class="from">${resultado[i].from}:</div>
+                <div class="text">${resultado[i].text}</div>                
+            </div>   
+        ` 
+
+           let el=  document.querySelector('.status:last-of-type').scrollIntoView();
+          
+        } else if ( resultado[i].type === 'message') {
+            chat.innerHTML += `
+            <div class="message">
+                <div class="time">(${resultado[i].time})</div>
+                <div class="from">${resultado[i].from}</div>
+                <p>para</p>
+                <div class="to">${resultado[i].to}:</div>
+                <div class="text">${resultado[i].text}</div>                
+            </div>    
+        ` 
+        let el=  document.querySelector('.message:last-of-type').scrollIntoView();
+        } else if (resultado[i].type === 'private_message') {
+            chat.innerHTML += `
+            <div class="private_message">
+                <div class="time">(${resultado[i].time})</div>
+                <div class="from">${resultado[i].from}</div>
+                <p>reservadamente para</p>
+                <div class="to">${resultado[i].to}:</div>
+                <div class="text">${resultado[i].text}</div>                
+            </div>   
+        ` 
+        let el=  document.querySelector('.private_message:last-of-type').scrollIntoView();
+            
+        }
+
+        contacts.innerHTML += `
+            <div class="menuItem" onclick="selectContact(this)">
+                 <ion-icon name="person-circle"></ion-icon>
+                 <p>${resultado[i].from}</p>
+                 <div class="check"><ion-icon name="checkmark-outline"></ion-icon></div>
+            </div>        
+        `
+        
+    }
 }
 
 
 
-function openMenu(item) {  
-        setTimeout(() => {
-        mobileMenu.classList.add('openMenu')
-        console.log(menuItens)
-    }, 100)
-    
+
+
+
+
+
+
+ 
+function sendName() {
+    container.classList.remove('hidden')
+    chooseName.classList.add('hidden')
+}
+
+
+
+function openMenu(item) {        
+    mobileMenu.classList.add('openMenu')
 }
 
 function closeMenu() {
@@ -34,13 +101,20 @@ function closeMenu() {
 
 function selectContact(contact) {
     let selectedPerson = document.querySelector('.contacts .selected')  
-      
+    //let selectedPrivacy = document.querySelector('.privacy .selected')   
     
     if(selectedPerson !== null) {
         selectedPerson.classList.remove('selected')         
        
     }  
-    
+    /* NÃO SEI SE VAI AINDA 
+     if (selectedPerson !== null && selectedPrivacy !== null) {
+        setTimeout(() => {
+            mobileMenu.classList.remove('openMenu')
+        }, 300)
+    }
+
+    */
 
     contact.classList.add('selected') 
    
@@ -48,7 +122,7 @@ function selectContact(contact) {
 }
 
 function choosePrivacy(privacy) {
-    
+    let selectedPerson = document.querySelector('.contacts .selected')  
     let selectedPrivacy = document.querySelector('.privacy .selected')      
     
     if(selectedPrivacy !== null) {
@@ -56,7 +130,14 @@ function choosePrivacy(privacy) {
        
     }  
 
-   
+    /*  NÃO SEI SE VAI AINDA
+     if (selectedPerson !== null && selectedPrivacy !== null) {
+        setTimeout(() => {
+
+            mobileMenu.classList.remove('openMenu')
+        }, 300)
+    }
+    */
 
    
     privacy.classList.add('selected')   
