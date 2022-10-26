@@ -142,10 +142,12 @@ body {
 .contacts {
     overflow-x: hidden;
     height: 420px;
+    cursor:pointer;
 }
 
 .privacy {
     margin-top: -20px;
+    cursor:pointer;
 }
 
 .openMenu {
@@ -204,8 +206,7 @@ body {
 }
 
 
-.chooseName {
-  
+.chooseName {  
     width: 375px;
     height: 100vh;      
     display: flex;
@@ -225,6 +226,8 @@ body {
     border: 1px solid #D7D7D7;
     border-radius: 4px;
     margin-top:-100px;
+    
+    text-align: center;
 }
 
 .chooseName input::placeholder {
@@ -233,6 +236,7 @@ body {
     font-size: 18px;
     line-height: 25px;
     text-align: center;
+    
 }
 
 .chooseName img {
