@@ -27,6 +27,10 @@ body {
     
     
 }
+
+ion-icon {
+    cursor:pointer;
+}
 .header img {
     width: 75px;
     height: 53px;
@@ -44,8 +48,24 @@ body {
     height: 72vh;  /* Tirar depois */
     background-color: #E5E5E5;
     overflow-x: hidden;
+    position: relative;
+    
    
 }
+
+.shadow {
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    width: calc(375px - 200px);
+    height: 100vh;
+    left: 0;
+    top: 0;
+    width: 375px;
+    
+}
+
+
 
 .status, .message, .private_message {
     width: 375px;
@@ -95,29 +115,42 @@ body {
 
 .sendMessage {
     width: 375px;
-    height: 80px;
-    border-style: none;
+    height: 80px;   
     position: relative;
-    display: flex;
-    align-items: flex-start;
+    display: flex;    
     box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
+    
+    
     
 }
 
 .sendMessage input {
     width: 100%;
     height: 100%;
-    padding: 20px;    
-    border-style: none;   
+    border-style: none;
+    padding-left: 20px;
+       
+  
 }
 
 .sendMessage input::placeholder {
-    
     font-style: italic; 
     font-size: 18px;
     font-weight: bold;
     color: black;
 }
+
+.sendingMessageTo {
+    position: absolute;
+    bottom: 5px;
+    left: 20px;
+    color:#505050;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 25px;
+    
+}
+
   
 
 
@@ -136,6 +169,8 @@ body {
     top: 0;
     right: -259px;        
     transition: all 0.4s ease;
+    z-index: 2;
+    
     
 }
 
@@ -152,6 +187,7 @@ body {
 
 .openMenu {
     right: 0;
+   
 }
 
 .menuHeader {
@@ -206,15 +242,16 @@ body {
 }
 
 
-.chooseName {  
+.chooseName .name, .chooseName {  
     width: 375px;
     height: 100vh;      
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    flex-direction: column;
-    padding:35px 57px 115px 57px;
+    flex-direction: column;    
     background-color: #FFFFFF;
+    position: relative;
+    padding-bottom: 100px;
     
     
 }
@@ -225,9 +262,9 @@ body {
     background: #FFFFFF;
     border: 1px solid #D7D7D7;
     border-radius: 4px;
-    margin-top:-100px;
     
     text-align: center;
+    
 }
 
 .chooseName input::placeholder {
@@ -239,9 +276,14 @@ body {
     
 }
 
-.chooseName img {
-    margin-top: -150px;
+.chooseName img:nth-child(1) {
+  margin-top: 30%; 
+  width: 130px;
+  
+
 }
+
+
 
 
 
@@ -269,5 +311,27 @@ body {
 }
 
 .hidden {
-    display: none;
+    display: none!important;
+}
+
+
+.loading {
+    position: absolute;
+    bottom: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFFFF;
+    
+}
+.loading img {
+    width: 150px;
+}
+
+
+
+.loading p {
+    font-size: 20px;
+    font-weight: 500;
 }

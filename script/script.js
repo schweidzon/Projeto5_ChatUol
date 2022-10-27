@@ -3,68 +3,142 @@ const chat = document.querySelector('.chat')
 const chooseName = document.querySelector('.chooseName')
 const container = document.querySelector('.container')
 const contacts = document.querySelector('.contacts')
-let user;
+const shadow = document.querySelector('.shadow')
+const sendingMessatoTo = document.querySelector('.sendingMessageTo')
+const loading = document.querySelector('.loading')
+const nameSelect = document.querySelector('.name')
+console.log(name.classList)
+console.log(sendingMessatoTo.innerHTML)
+
+let user, contactsList, selectedPerson, selectedPrivacy;
 
 
 
 function sendName() {
-    container.classList.remove('hidden')
-    chooseName.classList.add('hidden')    
-    user = document.querySelector('.user').value         
-    
-    if (user !== undefined) {
-        setInterval(() => {
-            const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages') 
-            promise.then(render) 
+    user = document.querySelector('.user').value  
+    const name = {name: user}
+    const sendName = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", name)
+    loading.classList.remove('hidden')
+    nameSelect.classList.add('hidden')
+    sendName.catch(error)  
+
+    setTimeout(() => {
+        container.classList.remove('hidden')
+        chooseName.classList.add('hidden')   
+    }, 3000)
+
+
+    setInterval(userStatus, 5000) 
+
+    function getMessages() {
+        if (user !== undefined) {
+            setInterval(() => {                
+                const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages') 
+                promise.then(renderMessages) 
+                console.log('pegando mensagens')
+            }, 3000)
             const respostaParticipantes = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants')
             respostaParticipantes.then(getParticipants)
-            console.log('mandando')
-        }, 3000)
+            setInterval(() => {
+                const respostaParticipantes = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants')
+                respostaParticipantes.then(getParticipants)
+            }, 10000)
+        }
+        
+    }
+    getMessages();
+}
+
+
+
+function loginError(erro) {
+    if (erro.response.status === 400) {
+        alert('Você não está mais na sala, por favor digite novamente seu nome')
+        window.location.reload();
+        }
+
+}
+
+function error(erro) {
+    if (erro.response.status === 400) {
+        alert('Nome de usuário já cadastrado, escolha outro nome.')
+        window.location.reload();
     }
 }
 
-function render(resposta) {
+function sucess(response) {
+    alert('deu certo')
+}
+
+function userStatus() {
+
+    const name = {name: user}
+    console.log(user)
+
+    const status = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', name)
+
+   
+    console.log('mandando status')
+  
+}
+
+function renderMessages(resposta) {   
+
     chat.innerHTML = ""
     const resultado = resposta.data
+    const lastTime = resultado[resultado.length - 1].time
+    console.log(lastTime)
+   
+    
+    
+        for(let i = 0; i < resultado.length; i++) {    
+        
+        
 
-    for(let i = 0; i < resultado.length; i++) {        
         
-        if(resultado[i].type === 'status') {
-            chat.innerHTML += `
-                <div class="status">
-                    <div class="time">(${resultado[i].time})</div>
-                    <div class="from">${resultado[i].from}:</div>
-                    <div class="text">${resultado[i].text}</div>                
-                </div> 
-            `
-           let el=  document.querySelector('.status:last-of-type').scrollIntoView();
-          
-        } else if ( resultado[i].type === 'message') {
-            chat.innerHTML += `
-                <div class="message">
-                    <div class="time">(${resultado[i].time})</div>
-                    <div class="from">${resultado[i].from}</div>
-                    <p>para</p>
-                    <div class="to">${resultado[i].to}:</div>
-                    <div class="text">${resultado[i].text}</div>                
-                </div>    
-            ` 
-            let el=  document.querySelector('.message:last-of-type').scrollIntoView();
-        
-        } else if (resultado[i].type === 'private_message' && resultado[i].to === user) {
-            chat.innerHTML += `
-                <div class="private_message">
-                    <div class="time">(${resultado[i].time})</div>
-                    <div class="from">${resultado[i].from}</div>
-                    <p>reservadamente para</p>
-                    <div class="to">${resultado[i].to}:</div>
-                    <div class="text">${resultado[i].text}</div>                
-                </div>   
-            ` 
-            let el=  document.querySelector('.private_message:last-of-type').scrollIntoView();
+            if(resultado[i].type === 'status') {
+                chat.innerHTML += `
+                    <div class="status">
+                        <div class="time">(${resultado[i].time})</div>
+                        <div class="from">${resultado[i].from}:</div>
+                        <div class="text">${resultado[i].text}</div>                
+                    </div> 
+                `
+               let el=  document.querySelector('.status:last-of-type').scrollIntoView();
+              
+            } else if ( resultado[i].type === 'message') {
+                chat.innerHTML += `
+                    <div class="message">
+                        <div class="time">(${resultado[i].time})</div>
+                        <div class="from">${resultado[i].from}</div>
+                        <p>para</p>
+                        <div class="to">${resultado[i].to}:</div>
+                        <div class="text">${resultado[i].text}</div>                
+                    </div>    
+                ` 
+                let el=  document.querySelector('.message:last-of-type').scrollIntoView();
             
+            } else if (resultado[i].type === 'private_message' && resultado[i].to === user ||resultado[i].type === 'private_message' && resultado[i].from === user ) {
+                chat.innerHTML += `
+                    <div class="private_message">
+                        <div class="time">(${resultado[i].time})</div>
+                        <div class="from">${resultado[i].from}</div>
+                        <p>reservadamente para</p>
+                        <div class="to">${resultado[i].to}:</div>
+                        <div class="text">${resultado[i].text}</div>                
+                    </div>   
+                ` 
+                let el=  document.querySelector('.private_message:last-of-type').scrollIntoView();
+                
+            }
+        
+        
+        
+    
+
         }
-    }
+
+    
 }
 
 function getParticipants(resposta) {    
@@ -80,10 +154,19 @@ function getParticipants(resposta) {
             </div>        
         `
     }
+
+    contactsList = document.querySelectorAll('.contacts .menuItem p')
+      
 }
+
+
+
+
+
 
 function openMenu(item) {        
     mobileMenu.classList.add('openMenu')
+    shadow.classList.remove('hidden')
 }
 
 function closeMenu() {
@@ -91,52 +174,89 @@ function closeMenu() {
         return
     }   
         mobileMenu.classList.remove('openMenu')
+        shadow.classList.add('hidden')
     
 }
 
 function selectContact(contact) {
-    let selectedPerson = document.querySelector('.contacts .selected')  
-    //let selectedPrivacy = document.querySelector('.privacy .selected')   
+    let selectPerson = document.querySelector('.contacts .selected')  
     
-    if(selectedPerson !== null) {
-        selectedPerson.classList.remove('selected')         
-       
+    if(selectPerson !== null) {
+        selectPerson.classList.remove('selected')    
+          
     }  
-    /* NÃO SEI SE VAI AINDA 
-     if (selectedPerson !== null && selectedPrivacy !== null) {
-        setTimeout(() => {
-            mobileMenu.classList.remove('openMenu')
-        }, 300)
-    }
-
-    */
 
     contact.classList.add('selected') 
-   
+    selectedPerson = document.querySelector('.contacts .selected p')  
+    console.log(selectedPerson.innerHTML)
+
+    if(selectedPerson!== undefined && selectedPrivacy!== undefined) {
+        sendingMessatoTo.innerHTML = `Enviando para ${selectedPerson.innerHTML} (${selectedPrivacy.innerHTML})`
+    }
   
 }
 
+
+
+
 function choosePrivacy(privacy) {
-    let selectedPerson = document.querySelector('.contacts .selected')  
-    let selectedPrivacy = document.querySelector('.privacy .selected')      
     
-    if(selectedPrivacy !== null) {
-        selectedPrivacy.classList.remove('selected')         
+    let selectPrivacy = document.querySelector('.privacy .selected')      
+    
+    if(selectPrivacy !== null) {
+        selectPrivacy.classList.remove('selected')         
        
     }  
-
-    /*  NÃO SEI SE VAI AINDA
-     if (selectedPerson !== null && selectedPrivacy !== null) {
-        setTimeout(() => {
-
-            mobileMenu.classList.remove('openMenu')
-        }, 300)
-    }
-    */
-
    
     privacy.classList.add('selected')   
+    selectedPrivacy = document.querySelector('.privacy .selected p')  
+    console.log(selectedPerson)
+    console.log(selectedPrivacy)
 
+    if(selectedPerson!== undefined && selectedPrivacy!== undefined) {
+        sendingMessatoTo.innerHTML = `Enviando para ${selectedPerson.innerHTML} (${selectedPrivacy.innerHTML})`
+    }
+
+}
+
+
+function sendMessage() {
+
+    const message = document.querySelector('.mensagem').value   
+    let mensagem;
+    
+
+    if(selectedPerson!== undefined && selectedPrivacy !== undefined && selectedPrivacy.innerHTML === 'Reservadamente') {
+        
+        
+        selectedPrivacy = 'private_message'
+    } else if (selectedPerson!== undefined && selectedPrivacy !== undefined && selectedPrivacy.innerHTML === 'Público') {
+        selectedPrivacy = 'message'
+        
+    }
+
+    if( selectedPerson !== undefined && selectedPrivacy === undefined) {
+        mensagem = {from: user, to: selectedPerson.innerHTML, text:message , type: 'message'};
+        
+    } else if (selectedPerson !== undefined && selectedPrivacy !== undefined) {
+        mensagem = {from: user, to: selectedPerson.innerHTML, text:message , type: selectedPrivacy};
+        console.log('if 3')
+       
+    } else if ( selectedPerson === undefined) {
+        mensagem = {from: user, to: 'Todos', text:message , type: 'message'};      
+    }
+
+    const sendMessages = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", mensagem)
+
+    
+    sendMessages.catch(loginError)
+
+
+    document.querySelector('.mensagem').value = ""
+    
+
+    
+    
 }
 
 
