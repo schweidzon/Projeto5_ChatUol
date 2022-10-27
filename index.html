@@ -14,8 +14,8 @@
         <img src="./images/logo.png">
         <div class="name ">
             <div class="input-wrapper">            
-                <input class="user "type="text" name="" id="" placeholder="Digite seu nome">
-                <button onclick="sendName()">Entrar</button>       
+                <input class="user "type="text" name="" id="" placeholder="Digite seu nome" data-identifier="enter-name">
+                <button onclick="sendName()" data-identifier="start">Entrar</button>       
             </div>            
         </div>
         
@@ -57,12 +57,12 @@
                 <div class="privacy">
                     <div class="menuItem" onclick="choosePrivacy(this)">
                         <ion-icon name="lock-open"></ion-icon>
-                        <p>Público</p>
+                        <p data-identifier="visibility">Público</p>
                         <div class="check"><ion-icon name="checkmark-outline"></ion-icon></div>
                     </div>
                     <div class="menuItem" onclick="choosePrivacy(this)">
                         <ion-icon name="lock-closed"></ion-icon>
-                        <p>Reservadamente</p>
+                        <p data-identifier="visibility">Reservadamente</p>
                         <div class="check"><ion-icon name="checkmark-outline"></ion-icon></div>
                     </div>
                 </div>
