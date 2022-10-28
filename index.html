@@ -19,13 +19,9 @@
                 <button onclick="sendName()" data-identifier="start">Entrar</button>       
             </div>            
         </div>
-        
         <div class="loading hidden">
             <img src="./images/logo.png">
-            <div class="loader">                
-                
-            </div>
-           
+            <div class="loader"></div>
             <p>Entrando...</p>
         </div>
     </div>
@@ -38,39 +34,31 @@
                 <div class="shadow hidden"></div>
                 <div class="chat"></div>
             </main>
-
-        
-       
         <footer class="sendMessage">
             <input class="mensagem" type="text" placeholder="Escreva aqui...">
             <div class="sendingMessageTo"> Enviando para todos (Público)</div>
             <ion-icon class="sendMenssageButton" name="paper-plane-outline" onclick="sendMessage()"></ion-icon>            
         </footer>
-
         <div class="menu hidden">
-                <div class="menuHeader">
-                    Escolha um contato para enviar mensagem:
-                </div>
-                <div class="contacts">
-                    
-                </div>
-                
-                <div class="menuHeader">
-                    Escolha a visibilidade:
-                </div>
-                <div class="privacy">
-                    <div class="menuItem selected" onclick="choosePrivacy(this)">
-                        <ion-icon name="lock-open"></ion-icon>
-                        <p data-identifier="visibility">Público</p>
-                        <div class="check"><ion-icon name="checkmark-outline"></ion-icon></div>
-                    </div>
-                    <div class="menuItem" onclick="choosePrivacy(this)">
-                        <ion-icon name="lock-closed"></ion-icon>
-                        <p data-identifier="visibility">Reservadamente</p>
-                        <div class="check"><ion-icon name="checkmark-outline"></ion-icon></div>
-                    </div>
-                </div>
-            
+             <div class="menuHeader">
+                 Escolha um contato para enviar mensagem:
+             </div>
+             <div class="contacts"></div>
+             <div class="menuHeader">
+                 Escolha a visibilidade:
+             </div>
+             <div class="privacy">
+                 <div class="menuItem selected" onclick="choosePrivacy(this)">
+                     <ion-icon name="lock-open"></ion-icon>
+                     <p data-identifier="visibility">Público</p>
+                     <div class="check"><ion-icon name="checkmark-outline"></ion-icon></div>
+                 </div>
+                 <div class="menuItem" onclick="choosePrivacy(this)">
+                     <ion-icon name="lock-closed"></ion-icon>
+                     <p data-identifier="visibility">Reservadamente</p>
+                     <div class="check"><ion-icon name="checkmark-outline"></ion-icon></div>
+                 </div>
+             </div>
         </div>
     </div>
 
