@@ -7,7 +7,14 @@ const shadow = document.querySelector('.shadow')
 const sendingMessatoTo = document.querySelector('.sendingMessageTo')
 const loading = document.querySelector('.loading')
 const nameSelect = document.querySelector('.name')
+
 let user, contactsList, selectedPerson, selectedPrivacy;
+
+nameSelect.addEventListener('keypress', function(e) {
+    if(e.keyCode === 13) {
+        sendName();
+    }
+})
 
 
 function sendName() {
@@ -21,7 +28,7 @@ function sendName() {
     setTimeout(() => {
         container.classList.remove('hidden')
         chooseName.classList.add('hidden')   
-    }, 3000)
+    }, 3200)
 
 
     setInterval(userStatus, 5000) 
@@ -198,6 +205,14 @@ function sendMessage() {
     document.querySelector('.mensagem').value = ""
     
 }
+
+const message = document.querySelector('.mensagem')
+
+message.addEventListener('keypress', function(e)  {
+    if(e.keyCode === 13) {
+        sendMessage();
+    }
+}) 
 
 function loginError(erro) {
     if (erro.response.status === 400) {
