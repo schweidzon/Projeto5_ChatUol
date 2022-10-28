@@ -334,7 +334,7 @@ ion-icon {
 
 .loading {
     position: absolute;
-    bottom: 43%;
+    bottom: 42%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -354,7 +354,6 @@ ion-icon {
     font-size: 20px;
     font-weight: 500;
     margin-top: -30px;
-    
 }
 
 
@@ -368,7 +367,7 @@ ion-icon {
     text-indent: -9999em;
     animation: mulShdSpin 1.3s infinite linear;
     transform: translateZ(0);
-    margin-top: -85px;
+    margin-top: -77px;
   }
   
   @keyframes mulShdSpin {
