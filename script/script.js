@@ -104,7 +104,13 @@ function renderMessages(resposta) {
 }
 
 function getParticipants(resposta) {    
-    contacts.innerHTML = ""
+    contacts.innerHTML = `
+        <div class="menuItem selected" onclick="selectContact(this) ">
+            <ion-icon name="person-circle"></ion-icon>
+            <p data-identifier="participant">Todos</p>
+            <div class="check"><ion-icon name="checkmark-outline"></ion-icon></div>
+        </div>        
+    `   
     const participants = resposta.data   
 
     for(let i =0 ; i < participants.length; i++) {
@@ -117,6 +123,7 @@ function getParticipants(resposta) {
         `
     }
     contactsList = document.querySelectorAll('.contacts .menuItem p')
+    
 }
 
 function selectContact(contact) {
@@ -201,6 +208,7 @@ function loginError(erro) {
 }
 
 function openMenu(item) {        
+    mobileMenu.classList.remove('hidden')
     mobileMenu.classList.add('openMenu')
     shadow.classList.remove('hidden')
 }
@@ -213,6 +221,11 @@ function closeMenu() {
         shadow.classList.add('hidden')
     
 }
+
+
+
+
+
 
 
 
