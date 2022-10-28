@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     
     <title>Document</title>
     <link rel="stylesheet" href="./css/reset.css">
@@ -39,7 +40,7 @@
        
         <footer class="sendMessage">
             <input class="mensagem" type="text" placeholder="Escreva aqui...">
-            <div class="sendingMessageTo"> </div>
+            <div class="sendingMessageTo"> Enviando para todos (Público)</div>
             <ion-icon class="sendMenssageButton" name="paper-plane-outline" onclick="sendMessage()"></ion-icon>            
         </footer>
 
@@ -55,7 +56,7 @@
                     Escolha a visibilidade:
                 </div>
                 <div class="privacy">
-                    <div class="menuItem" onclick="choosePrivacy(this)">
+                    <div class="menuItem selected" onclick="choosePrivacy(this)">
                         <ion-icon name="lock-open"></ion-icon>
                         <p data-identifier="visibility">Público</p>
                         <div class="check"><ion-icon name="checkmark-outline"></ion-icon></div>
