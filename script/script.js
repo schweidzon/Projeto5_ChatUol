@@ -22,6 +22,7 @@ function sendName() {
     loading.classList.remove('hidden');
     nameSelect.classList.add('hidden');
 
+    sendingMessatoTo.innerHTML = `Enviando para Todos (Público)`;
     getMessages();
     getParticipants();
 }
@@ -87,14 +88,14 @@ function getMessages() {
 setInterval(getMessages, 2000);
 
 function renderMessages(response) {   
-   
 
     chat.innerHTML = "";
     const resultado = response.data;
+    
    
     
   for(let i = 0; i < resultado.length; i++) {    
-  
+    
      if(resultado[i].type === 'status') {
          chat.innerHTML += `
              <div class="status">
@@ -140,6 +141,7 @@ function renderMessages(response) {
 function getMessagesErro(erro) {
     if(erro.response.status === 400) {
         alert('Erro ao recuperar mensagens');
+        window.location.reload()
     }
 }
 
@@ -191,15 +193,32 @@ function sendMessage() {
         selectedPrivacy = 'message';
     }
 
+    console.log(selectedPrivacy)
+    console.log(selectedPerson)
+
     if( selectedPerson !== undefined && selectedPrivacy === undefined) {
         mensagem = {from: user, to: selectedPerson.innerHTML, text:message , type: 'message'};
         
     } else if (selectedPerson !== undefined && selectedPrivacy !== undefined) {
         mensagem = {from: user, to: selectedPerson.innerHTML, text:message , type: selectedPrivacy};
+        if (selectedPerson.innerHTML === 'Todos' && selectedPrivacy === 'private_message') {
+            alert('Você não pode mandar mensagem Reservadamente para Todos')
+            document.querySelector('.mensagem').value = "";
+            return
+        }
        
-    } else if ( selectedPerson === undefined) {
-        mensagem = {from: user, to: 'Todos', text:message , type: 'message'};      
+    } else if ( selectedPerson === undefined && selectedPrivacy !== undefined) {
+        mensagem = {from: user, to: 'Todos', text:message , type: selectedPrivacy};  
+        if (selectedPrivacy.innerHTML=== 'Reservadamente') {
+            alert('Você não pode mandar mensagem Reservadamente para Todos')
+            document.querySelector('.mensagem').value = "";
+            return
+        }
+    } else if (selectedPerson === undefined && selectedPrivacy === undefined) {
+        mensagem = {from: user, to: 'Todos', text:message , type: 'message'}; 
     }
+
+    
    
     const sendMessages = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", mensagem);
     sendMessages.then(sendMessagesSucess);
@@ -212,6 +231,7 @@ function sendMessagesSucess(response) {
     if(response.status === 200) {
         getMessages();
         console.log('pegando msg depois de mandar');
+        
     }
 }
 
@@ -235,9 +255,27 @@ function selectContact(contact) {
     selectedPerson = document.querySelector('.contacts .selected p');  
     console.log(selectedPerson.innerHTML);
 
-    if(selectedPerson!== undefined && selectedPrivacy!== undefined) {
-        sendingMessatoTo.innerHTML = `Enviando para ${selectedPerson.innerHTML} (${selectedPrivacy.innerHTML})`;
+    if(selectedPerson !== undefined && selectedPrivacy === undefined) {
+        sendingMessatoTo.innerHTML = `Enviando para ${selectedPerson.innerHTML} (Público)`;
+        
+    } else if (selectedPerson === undefined && selectedPrivacy !== undefined) {
+         if( selectedPrivacy === 'message') {
+            sendingMessatoTo.innerHTML = `Enviando para ${selectedPerson.innerHTML} (Público)`;
+        } else if(selectedPrivacy === 'private_message') {
+            sendingMessatoTo.innerHTML = `Enviando para ${selectedPerson.innerHTML} (Reservadamente)`;
+        }
+      
+    } else if (selectedPerson !== undefined && selectedPrivacy !== undefined){
+        if( selectedPrivacy === 'message') {
+            sendingMessatoTo.innerHTML = `Enviando para ${selectedPerson.innerHTML} (Público)`;
+        } else if(selectedPrivacy === 'private_message') {
+            sendingMessatoTo.innerHTML = `Enviando para ${selectedPerson.innerHTML} (Reservadamente)`;
+        }
+       
+
     }
+
+   
   
 }
 
@@ -255,9 +293,14 @@ function choosePrivacy(privacy) {
     console.log(selectedPerson);
     console.log(selectedPrivacy);
 
-    if(selectedPerson!== undefined && selectedPrivacy!== undefined) {
+    if(selectedPerson === undefined && selectedPrivacy !== undefined ) {
+        sendingMessatoTo.innerHTML = `Enviando para Todos (${selectedPrivacy.innerHTML})`;
+    } else if( selectedPerson!== undefined && selectedPrivacy!== undefined) {
+
         sendingMessatoTo.innerHTML = `Enviando para ${selectedPerson.innerHTML} (${selectedPrivacy.innerHTML})`;
     }
+
+    
 }
 
 const message = document.querySelector('.mensagem');

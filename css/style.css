@@ -10,6 +10,7 @@ html {
     height: -webkit-fill-available;
     overflow: hidden;
     position: relative;
+    
 }
 
 body {
@@ -73,6 +74,7 @@ ion-icon {
     background-color: #E5E5E5;
     overflow-x: hidden;
     position: relative;
+    word-break: break-all;
 }
 
 .shadow {
@@ -146,7 +148,11 @@ ion-icon {
     height: 100%;
     border-style: none;
     padding-left: 20px;
+    padding-right: 55px;
+    padding-bottom: 7px;
     font-size: 16px;
+    word-wrap: break-word;
+    word-break: break-all;
        
   
 }
