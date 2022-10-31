@@ -253,23 +253,27 @@ function selectContact(contact) {
 
     contact.classList.add('selected') 
     selectedPerson = document.querySelector('.contacts .selected p');  
-    console.log(selectedPerson.innerHTML);
-
+    
     if(selectedPerson !== undefined && selectedPrivacy === undefined) {
         sendingMessatoTo.innerHTML = `Enviando para ${selectedPerson.innerHTML} (Público)`;
         
+        
     } else if (selectedPerson === undefined && selectedPrivacy !== undefined) {
-         if( selectedPrivacy === 'message') {
+         if( selectedPrivacy === 'message' || selectedPrivacy.innerHTML === 'Público') {
             sendingMessatoTo.innerHTML = `Enviando para ${selectedPerson.innerHTML} (Público)`;
-        } else if(selectedPrivacy === 'private_message') {
+            
+        } else if(selectedPrivacy === 'private_message' || selectedPrivacy.innerHTML === 'Reservadamente') {
             sendingMessatoTo.innerHTML = `Enviando para ${selectedPerson.innerHTML} (Reservadamente)`;
+            
         }
       
     } else if (selectedPerson !== undefined && selectedPrivacy !== undefined){
-        if( selectedPrivacy === 'message') {
+        if( selectedPrivacy === 'message' || selectedPrivacy.innerHTML === 'Público') {
             sendingMessatoTo.innerHTML = `Enviando para ${selectedPerson.innerHTML} (Público)`;
-        } else if(selectedPrivacy === 'private_message') {
+            
+        } else if(selectedPrivacy === 'private_message' || selectedPrivacy.innerHTML === 'Reservadamente') {
             sendingMessatoTo.innerHTML = `Enviando para ${selectedPerson.innerHTML} (Reservadamente)`;
+            
         }
        
 
