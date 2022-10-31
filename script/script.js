@@ -9,6 +9,8 @@ const loading = document.querySelector('.loading');
 const nameSelect = document.querySelector('.name');
 let user, selectedPerson, selectedPrivacy;
 
+// Função para mandar o nome do usuário para o servidor. Além disso, ela executa as funções de pegar mensagem e pegar participantes do servidos e colocar na tela.
+
 function sendName() {
     user = document.querySelector('.user').value;  
     if(user === "" ) {
@@ -27,11 +29,15 @@ function sendName() {
     getParticipants();
 }
 
+// Função para, quando apertar ENTER, o nome do usuário ser enviado para o servidor.
+
 nameSelect.addEventListener('keypress', function(e) {
     if(e.keyCode === 13) {
         sendName();
     }
 })
+
+
 
 function sendNameSuccess(response) {
 
@@ -50,7 +56,7 @@ function sendNameErro(erro) {
     }
 }
 
-
+// Função para mandar para o servidor o status que o usuário está ativo, para o mesmo não desconectar.
 
 function userStatus() {
     if ( user !== undefined) {
@@ -73,7 +79,11 @@ function userStatusErro(erro) {
     }
 }
 
+// Função de status sendo executada a cada 5 segundos
+
 setInterval(userStatus, 5000);
+
+// Função para pegar as mensagens no servidos e chamar a função de mostrar na tela, no caso de sucesso.
   
 function getMessages() {
     if (user !== undefined) {
@@ -85,7 +95,11 @@ function getMessages() {
     }
 }  
 
+// A cada 2 segundos, pegas as mensagens no servidos.
+
 setInterval(getMessages, 2000);
+
+// Função que recebe as mensagens do servidor, trata elas e renderiza na tela de acordo com o tipo de mensagem.
 
 function renderMessages(response) {   
 
@@ -141,15 +155,19 @@ function renderMessages(response) {
 function getMessagesErro(erro) {
     if(erro.response.status === 400) {
         alert('Erro ao recuperar mensagens');
-        window.location.reload()
+        window.location.reload();
     }
 }
+
+// Função para pegar os participantes ativos do servidos e chamar a função de colocar eles na tela;
 
 function getParticipants() {    
     const participantsResponse = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
     participantsResponse.then(renderParticipants);
     console.log('pegando participantes');
 }
+
+// Função que recebe os participantes ativos e renderiza na tela;
 
 function renderParticipants(response) {
 
@@ -175,7 +193,11 @@ function renderParticipants(response) {
     }
 }
 
+// Pega os participantes a cada 10 segundos;
+
 setInterval(getParticipants, 10000);
+
+// Função de mandar mensagem para o serivdor;
 
 function sendMessage() {
 
@@ -193,26 +215,22 @@ function sendMessage() {
         selectedPrivacy = 'message';
     }
 
-    console.log(selectedPrivacy)
-    console.log(selectedPerson)
-
     if( selectedPerson !== undefined && selectedPrivacy === undefined) {
         mensagem = {from: user, to: selectedPerson.innerHTML, text:message , type: 'message'};
-        
     } else if (selectedPerson !== undefined && selectedPrivacy !== undefined) {
         mensagem = {from: user, to: selectedPerson.innerHTML, text:message , type: selectedPrivacy};
         if (selectedPerson.innerHTML === 'Todos' && selectedPrivacy === 'private_message') {
-            alert('Você não pode mandar mensagem Reservadamente para Todos')
+            alert('Você não pode mandar mensagem Reservadamente para Todos');
             document.querySelector('.mensagem').value = "";
-            return
+            return;
         }
        
     } else if ( selectedPerson === undefined && selectedPrivacy !== undefined) {
         mensagem = {from: user, to: 'Todos', text:message , type: selectedPrivacy};  
         if (selectedPrivacy.innerHTML=== 'Reservadamente') {
-            alert('Você não pode mandar mensagem Reservadamente para Todos')
+            alert('Você não pode mandar mensagem Reservadamente para Todos');
             document.querySelector('.mensagem').value = "";
-            return
+            return;
         }
     } else if (selectedPerson === undefined && selectedPrivacy === undefined) {
         mensagem = {from: user, to: 'Todos', text:message , type: 'message'}; 
@@ -226,6 +244,8 @@ function sendMessage() {
 
     document.querySelector('.mensagem').value = "";
 }
+
+// Função que chama a função de pegar mensagens do servidor quando mandamos uma mensagem;
 
 function sendMessagesSucess(response) {
     if(response.status === 200) {
@@ -243,6 +263,8 @@ function sendMessagesErro(erro) {
     }
 }
 
+// Função para selecionar os contatos e colocar eles na tela do menu mobile;
+
 function selectContact(contact) {
     let selectPerson = document.querySelector('.contacts .selected');  
     
@@ -251,13 +273,12 @@ function selectContact(contact) {
           
     }  
 
-    contact.classList.add('selected') 
+    contact.classList.add('selected'); 
     selectedPerson = document.querySelector('.contacts .selected p');  
     
     if(selectedPerson !== undefined && selectedPrivacy === undefined) {
         sendingMessatoTo.innerHTML = `Enviando para ${selectedPerson.innerHTML} (Público)`;
-        
-        
+
     } else if (selectedPerson === undefined && selectedPrivacy !== undefined) {
          if( selectedPrivacy === 'message' || selectedPrivacy.innerHTML === 'Público') {
             sendingMessatoTo.innerHTML = `Enviando para ${selectedPerson.innerHTML} (Público)`;
@@ -275,13 +296,10 @@ function selectContact(contact) {
             sendingMessatoTo.innerHTML = `Enviando para ${selectedPerson.innerHTML} (Reservadamente)`;
             
         }
-       
-
     }
-
-   
-  
 }
+
+// Função para escolher a tipo de mensagem a ser enviada (privada ou pública);
 
 function choosePrivacy(privacy) {
     
@@ -300,14 +318,13 @@ function choosePrivacy(privacy) {
     if(selectedPerson === undefined && selectedPrivacy !== undefined ) {
         sendingMessatoTo.innerHTML = `Enviando para Todos (${selectedPrivacy.innerHTML})`;
     } else if( selectedPerson!== undefined && selectedPrivacy!== undefined) {
-
         sendingMessatoTo.innerHTML = `Enviando para ${selectedPerson.innerHTML} (${selectedPrivacy.innerHTML})`;
     }
-
-    
 }
 
 const message = document.querySelector('.mensagem');
+
+// Função para mandar a mensagem para o servidor e depois pegar as mensagens quando apertar ENTER;
 
 message.addEventListener('keypress', function(e)  {
     if(e.keyCode === 13) {
@@ -315,12 +332,15 @@ message.addEventListener('keypress', function(e)  {
     }
 }) 
 
+// Função para abrir o menu mobile;
 
 function openMenu() {        
     mobileMenu.classList.remove('hidden');
     mobileMenu.classList.add('openMenu');
     shadow.classList.remove('hidden');
 }
+
+// Função para fechar o menu mobile quando clicar na parte escura;
 
 function closeMenu() {
     if(!mobileMenu.classList.contains('openMenu')){
