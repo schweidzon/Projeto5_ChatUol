@@ -112,7 +112,7 @@ function renderMessages(response) {
     
      if(resultado[i].type === 'status') {
          chat.innerHTML += `
-             <div class="status">
+             <div class="status" data-test="message">
                  <div class="time">(${resultado[i].time})</div>
                  <div class="from">${resultado[i].from}:</div>
                  <div class="text">${resultado[i].text}</div>                
@@ -124,7 +124,7 @@ function renderMessages(response) {
        
      } else if ( resultado[i].type === 'message') {
          chat.innerHTML += `
-             <div class="message">
+             <div class="message" data-test="message">
                  <div class="time">(${resultado[i].time})</div>
                  <div class="from">${resultado[i].from}</div>
                  <p>para</p>
@@ -138,7 +138,7 @@ function renderMessages(response) {
      
      } else if (resultado[i].type === 'private_message' && resultado[i].to === user ||resultado[i].type === 'private_message' && resultado[i].from === user ) {
             chat.innerHTML += `
-                <div class="private_message">
+                <div class="private_message" data-test="message">
                     <div class="time">(${resultado[i].time})</div>
                     <div class="from">${resultado[i].from}</div>
                     <p>reservadamente para</p>
@@ -159,7 +159,7 @@ function getMessagesErro(erro) {
     }
 }
 
-// Função para pegar os participantes ativos do servidos e chamar a função de colocar eles na tela;
+// Função para pegar os participantes ativos do servidor e chamar a função de colocar eles na tela;
 
 function getParticipants() {    
     const participantsResponse = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
@@ -173,20 +173,20 @@ function renderParticipants(response) {
 
     if(response.status === 200) {
         contacts.innerHTML = `
-            <div class="menuItem selected" onclick="selectContact(this) ">
+            <div class="menuItem selected" onclick="selectContact(this)" data-test="all">
                 <ion-icon name="person-circle"></ion-icon>
                 <p data-identifier="participant">Todos</p>
-                <div class="check"><ion-icon name="checkmark-outline"></ion-icon></div>
+                <ion-icon class="check" name="checkmark-outline" data-test="check"></ion-icon>
             </div>        
          `   
         const participants = response.data;   
 
         for(let i =0 ; i < participants.length; i++) {
             contacts.innerHTML += `
-                <div class="menuItem" onclick="selectContact(this) ">
+                <div class="menuItem" onclick="selectContact(this)" data-test="participants">
                     <ion-icon name="person-circle"></ion-icon>
                     <p data-identifier="participant">${participants[i].name}</p>
-                    <div class="check"><ion-icon name="checkmark-outline"></ion-icon></div>
+                    <ion-icon class="check" name="checkmark-outline" data-test="check"></ion-icon>
                 </div>        
             `
         }
